@@ -2,28 +2,95 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   Phone, Mail, Menu, X, ArrowRight, Factory, TrendingUp, Users, Award,
-  ShieldCheck, Settings, Headphones, MapPin, Wind, Fan, Gauge,
+  ShieldCheck, Settings, Headphones, MapPin,
   UtensilsCrossed, Pill, Building2, Shirt, FlaskConical, Hammer, TreePine, Mountain, Flame, Cog,
 } from "lucide-react";
 import maaLogo from "@/assets/maa-logo.jpg";
+import heroCentrifugal from "@/assets/hero-centrifugal.jpg";
+import catIndustrial from "@/assets/cat-industrial.png";
+import catAxial from "@/assets/cat-axial.png";
+
+function CentrifugalAnim() {
+  return (
+    <svg viewBox="0 0 270 200" className="h-44 w-64" aria-label="Boiler with centrifugal blower and chimney">
+      <rect x="0" y="180" width="270" height="4" fill="#1f2a44" />
+      {/* Boiler drum (left) */}
+      <rect x="8" y="80" width="72" height="95" rx="8" fill="#e6edf7" stroke="#1e3a8a" strokeWidth="3" />
+      <circle cx="22" cy="98" r="3" fill="#dc2626" />
+      <rect x="30" y="95" width="42" height="5" rx="2" fill="#1e3a8a" opacity="0.2" />
+      <rect x="20" y="145" width="48" height="22" rx="3" fill="#0b1220" />
+      <g style={{ transformOrigin: "44px 156px", animation: "pulse 1.2s ease-in-out infinite" }}>
+        <path d="M28 165 Q34 148 42 154 Q50 144 58 165 Z" fill="#f59e0b" />
+        <path d="M34 165 Q40 154 44 158 Q48 150 50 165 Z" fill="#dc2626" />
+      </g>
+      {/* Suction duct: boiler -> blower inlet (eye) */}
+      <rect x="80" y="112" width="30" height="14" fill="#1e3a8a" opacity="0.3" />
+      <g style={{ animation: "fade-in 1.2s ease-in-out infinite" }}>
+        <path d="M84 119 L102 119 M98 115 L102 119 L98 123" stroke="#2563eb" strokeWidth="2" fill="none" />
+      </g>
+
+      {/* Centrifugal scroll — volute housing with a straight tangential discharge */}
+      <path
+        d="M150 84 C126 84 108 101 108 124 C108 148 126 164 150 164 C164 164 176 158 184 148 L234 148 L234 132 L181 132 L181 116 C181 97 168 84 150 84 Z"
+        fill="#2563eb"
+        stroke="#1e3a8a"
+        strokeWidth="3"
+        strokeLinejoin="round"
+      />
+      {/* Inlet eye (front plate) */}
+      <circle cx="150" cy="120" r="14" fill="#e6edf7" stroke="#1e3a8a" strokeWidth="2.5" />
+      {/* Impeller blades */}
+      <g style={{ transformOrigin: "150px 120px", animation: "spin 1.2s linear infinite" }}>
+        {[0, 45, 90, 135, 180, 225, 270, 315].map((a) => (
+          <path key={a}
+                d="M150 120 Q158 109 152 99"
+                stroke="#1e3a8a" strokeWidth="2.2" fill="none" strokeLinecap="round"
+                transform={`rotate(${a} 150 120)`} />
+        ))}
+        <circle cx="150" cy="120" r="4" fill="#1e3a8a" />
+      </g>
+      {/* Base frame */}
+      <rect x="116" y="168" width="78" height="10" rx="1" fill="#1e3a8a" />
+
+      {/* Discharge flow: blower -> bottom of chimney */}
+      <g style={{ animation: "fade-in 1.2s ease-in-out infinite" }}>
+        <path d="M188 140 L222 140 M216 135 L222 140 L216 145" stroke="#e6edf7" strokeWidth="2.5" fill="none" />
+      </g>
+      {/* Chimney (right) */}
+      <rect x="234" y="30" width="20" height="150" fill="#94a3b8" stroke="#1e3a8a" strokeWidth="2" />
+      <rect x="230" y="26" width="28" height="6" fill="#1e3a8a" />
+      <g style={{ animation: "fade-in 2.4s ease-in-out infinite" }}>
+        <circle cx="244" cy="18" r="5" fill="#cbd5e1" opacity="0.85" />
+        <circle cx="252" cy="10" r="4" fill="#cbd5e1" opacity="0.65" />
+        <circle cx="238" cy="8" r="3.5" fill="#cbd5e1" opacity="0.55" />
+        <circle cx="248" cy="3" r="3" fill="#cbd5e1" opacity="0.45" />
+      </g>
+    </svg>
+  );
+}
+
 
 const categories = [
   {
-    Icon: Factory,
+    img: catIndustrial,
+    Anim: null as null | (() => React.ReactElement),
     title: "Industrial Blower",
-    desc: "We stand as the foremost manufacturer and exporter of superior-grade industrial blowers. Our cutting-edge blowers are exceptional mechanical devices, expertly engineered to propel air or gases with precision — even at angles diverging from the incoming flow.",
+    desc: "High-performance industrial blowers built to move air and gases with precision — reliable, efficient and engineered for demanding process environments.",
   },
   {
-    Icon: Gauge,
+    img: null,
+    Anim: CentrifugalAnim,
     title: "Centrifugal Fan & Blower",
-    desc: "Our centrifugal fans stand as iconic examples of precision engineering, specially designed to thrive in the demanding realm of high temperatures. With an unwavering commitment to performance, these fans excel within temperature ranges spanning 100°C to 450°C.",
+    desc: "Precision-engineered centrifugal fans designed to run reliably at sustained high temperatures — from 100°C up to 450°C — making them the trusted choice for industrial boilers, thermic fluid heaters, hot air generators and heavy process plants. Rugged impellers, balanced rotors and heat-resistant construction deliver steady draft, high static pressure and long service life, even under continuous 24×7 operation.",
   },
   {
-    Icon: Fan,
+    img: catAxial,
+    Anim: null as null | (() => React.ReactElement),
     title: "Axial Fan",
-    desc: "Our Tube Axial Fan stands as a testament to engineering brilliance, boasting a harmonious blend of high flow rates and low pressure capabilities. Designed to champion ventilation, these fans emerge as true workhorses of air movement.",
+    desc: "Tube axial fans delivering high air flow at low pressure — the go-to workhorse for ventilation and general air movement.",
   },
 ];
+
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -40,7 +107,7 @@ const stats = [
   { icon: Factory, value: "5+", label: "Years Experience" },
   { icon: TrendingUp, value: "100+", label: "Projects Completed" },
   { icon: Users, value: "50+", label: "Happy Clients" },
-  { icon: Award, value: "10+", label: "Applications" },
+  { icon: Award, value: "10+", label: "Areas of Application" },
 ];
 
 const whyUs = [
@@ -81,17 +148,17 @@ function Index() {
               <Phone className="h-3.5 w-3.5" /> 9376132724
             </a>
           </div>
-          <a href="mailto:maaenterprise4493@gmail.com" className="flex items-center gap-1.5 hover:opacity-80">
-            <Mail className="h-3.5 w-3.5" /> maaenterprise4493@gmail.com
+          <a href="mailto:info@maaenterpriseco.com" className="flex items-center gap-1.5 hover:opacity-80">
+            <Mail className="h-3.5 w-3.5" /> info@maaenterpriseco.com
           </a>
         </div>
       </div>
 
       {/* Nav */}
       <header className="bg-white border-b border-border sticky top-0 z-40 shadow-[var(--shadow-soft)]">
-        <div className="container mx-auto px-4 flex items-center justify-between h-20">
+        <div className="container mx-auto px-4 flex items-center justify-between h-28 md:h-36">
           <a href="#home" className="flex items-center gap-2">
-            <img src={maaLogo} alt="MAA Enterprise" className="h-12 w-auto" />
+            <img src={maaLogo} alt="MAA Enterprise" className="h-20 md:h-28 w-auto" />
           </a>
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
             <a href="#home" className="text-foreground hover:text-primary transition-colors">Home</a>
@@ -116,15 +183,13 @@ function Index() {
       </header>
 
       {/* Hero */}
-      <section id="home" className="relative text-white py-24 md:py-32" style={{ background: "var(--gradient-hero)" }}>
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
-            MAA ENTERPRISE
-          </h1>
-          <p className="text-xl md:text-2xl font-medium opacity-95 mb-6">
-            Industrial Blowers &amp; Fans Manufacturer
-          </p>
-          <p className="text-base md:text-lg opacity-85 max-w-2xl mx-auto mb-10 leading-relaxed">
+      <section id="home" className="relative text-white py-24 md:py-36 overflow-hidden">
+        <div className="absolute inset-0">
+          <img src={heroCentrifugal} alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, oklch(0.28 0.14 260 / 0.85) 0%, oklch(0.32 0.16 260 / 0.7) 100%)" }} />
+        </div>
+        <div className="relative container mx-auto px-4 text-center">
+          <p className="text-lg md:text-2xl opacity-95 max-w-3xl mx-auto mb-10 leading-relaxed font-medium drop-shadow">
             Leading manufacturer and supplier of high-quality industrial blowers, centrifugal fans, and axial fans in Ahmedabad, Gujarat, India.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -158,17 +223,21 @@ function Index() {
             <h2 className="font-display text-3xl md:text-5xl font-bold text-foreground mb-4">What We Manufacture</h2>
             <p className="text-muted-foreground">A complete range of air-movement equipment engineered for performance and reliability.</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {categories.map(({ Icon, title, desc }) => (
+          <div className="grid md:grid-cols-3 gap-8 max-w-2xl md:max-w-none mx-auto">
+            {categories.map(({ img, Anim, title, desc }) => (
               <article key={title} className="flex flex-col">
-                <div className="bg-muted rounded-lg px-6 py-10 flex flex-col items-center justify-between min-h-[320px] mb-6">
-                  <h3 className="font-display text-lg md:text-xl font-bold text-foreground uppercase tracking-wide text-center mb-6">{title}</h3>
-                  <Icon className="h-28 w-28 text-primary" strokeWidth={1.4} />
+                <div className="bg-muted rounded-lg px-6 py-12 flex flex-col items-center min-h-[360px] mb-5">
+                  <h3 className="font-display text-xl font-bold text-foreground uppercase tracking-wide text-center mb-8">{title}</h3>
+                  {Anim ? <Anim /> : img ? (
+                    <img src={img} alt={title} loading="lazy" width={512} height={512} className="h-48 w-48 object-contain" />
+                  ) : null}
                 </div>
-                <p className="text-base text-foreground/80 leading-relaxed">{desc}</p>
+                <p className="text-base text-foreground/80 leading-relaxed text-justify">{desc}</p>
               </article>
             ))}
           </div>
+
+
         </div>
       </section>
 
@@ -228,7 +297,7 @@ function Index() {
             <div className="bg-white/10 backdrop-blur border border-white/20 rounded-xl p-5">
               <Mail className="h-6 w-6 mb-3 opacity-90" />
               <div className="text-xs uppercase tracking-wider opacity-75 mb-1">Email</div>
-              <a href="mailto:maaenterprise4493@gmail.com" className="font-semibold break-all hover:opacity-90">maaenterprise4493@gmail.com</a>
+              <a href="mailto:info@maaenterpriseco.com" className="font-semibold break-all hover:opacity-90">info@maaenterpriseco.com</a>
             </div>
             <div className="bg-white/10 backdrop-blur border border-white/20 rounded-xl p-5">
               <MapPin className="h-6 w-6 mb-3 opacity-90" />
@@ -236,7 +305,7 @@ function Index() {
               <div className="font-semibold">Ahmedabad, Gujarat, India</div>
             </div>
           </div>
-          <a href="mailto:maaenterprise4493@gmail.com" className="inline-flex items-center gap-2 bg-white text-primary hover:bg-white/90 transition-colors px-8 py-3.5 rounded-md font-semibold">
+          <a href="mailto:info@maaenterpriseco.com" className="inline-flex items-center gap-2 bg-white text-primary hover:bg-white/90 transition-colors px-8 py-3.5 rounded-md font-semibold">
             Contact Us Now <ArrowRight className="h-4 w-4" />
           </a>
         </div>
@@ -246,9 +315,9 @@ function Index() {
       <footer className="bg-brand-blue-deep text-white/80">
         <div className="container mx-auto px-4 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <img src={maaLogo} alt="MAA Enterprise" className="h-10 w-auto bg-white rounded p-1" />
+            <img src={maaLogo} alt="MAA Enterprise" className="h-16 w-auto bg-white rounded p-1" />
             <div>
-              <div className="font-display font-bold text-white">MAA Enterprise</div>
+              <div className="font-display font-bold text-white">MAA ENTERPRISE</div>
               <div className="text-xs opacity-75">Industrial Blowers &amp; Fans Manufacturer</div>
             </div>
           </div>
